@@ -1,0 +1,118 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage{lmodern}
+\usepackage[a4paper,margin=2.2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{needspace}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{azul}{HTML}{1F4E79}
+\titleformat{\section}{\large\bfseries\color{azul}}{\thesection.}{0.5em}{}
+\titlespacing*{\section}{0pt}{1.1em}{0.4em}
+\setlist{itemsep=0.15em,topsep=0.3em}
+\renewcommand{\arraystretch}{1.25}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+
+% Enlace al repositorio del taller: reemplazar cuando esté disponible.
+\newcommand{\enlacerepo}{\textbf{[enlace al repositorio pendiente]}}
+
+\begin{document}
+
+\noindent
+\includegraphics[height=1.15cm]{../build/logos/logo_100.png}\hfill
+\includegraphics[height=1.5cm]{../build/logos/logo_pucv.png}
+
+\vspace{0.6em}
+{\large\color{azul} Taller CIIS\par}
+\vspace{0.2em}
+{\LARGE\bfseries\color{azul} Coordinación de metaheurísticas colaborativas guiada por series temporales mediante Dynamic Time Warping\par}
+\vspace{0.6em}
+\textbf{Lucas Erazo}\\
+Estudiante de Ingeniería Civil Informática, Pontificia Universidad Católica de Valparaíso\\
+\href{mailto:lucas.erazo@pucv.cl}{lucas.erazo@pucv.cl} \quad·\quad ORCID \href{https://orcid.org/0009-0001-3259-454X}{0009-0001-3259-454X}
+
+\vspace{0.5em}
+\begin{tabularx}{\textwidth}{@{}>{\bfseries}l X@{}}
+\toprule
+Fecha & Miércoles 18 de noviembre de 2026 \\
+Lugar & Laboratorio de cómputo, ESIS, UNJBG \\
+Modalidad & Práctica guiada en Google Colab \\
+\bottomrule
+\end{tabularx}
+
+\section{Resumen}
+
+Mientras una metaheurística busca, guarda el mejor valor que ha encontrado. La curva de ese valor sube al principio y después se aplana, cuando la búsqueda deja de mejorar. En este taller los participantes construyen un monitor que detecta esa meseta comparando el tramo reciente de la curva con una rampa y con una constante mediante \emph{Dynamic Time Warping} (DTW) [1]. Luego observan cómo responde un híbrido de \emph{Grey Wolf Optimizer} [2] y \emph{Differential Evolution} (GWO-DE) cuando el monitor la detecta: la búsqueda cambia sus parámetros de explotación a exploración.
+
+Los ejercicios usan dos problemas. El primero es la mochila multidimensional (MKP), un problema clásico de optimización combinatoria. El segundo, HRES2, consiste en dimensionar un sistema de viento, sol, batería y electrolizador que produce hidrógeno, buscando el menor costo de la energía. El taller se basa en el trabajo \emph{Time-Series-Driven Parameter Control of a Hybrid Grey Wolf Optimizer and Differential Evolution via Dynamic Time Warping}.
+
+\section{Objetivos}
+
+\textbf{Objetivo general.} Comprender cómo la curva de convergencia, leída como una serie de tiempo, permite detectar cuándo se estanca una metaheurística y decidir cuándo cambiar sus parámetros.
+
+\textbf{Objetivos específicos.} Al terminar el taller, cada participante podrá:
+\begin{enumerate}
+  \item Reconocer una meseta en la curva del mejor valor de una búsqueda.
+  \item Calcular la distancia DTW entre un tramo de la curva y dos patrones, una rampa y una constante, e interpretar su diferencia.
+  \item Explicar cómo el tamaño de la ventana, la banda, la paciencia y la pendiente de la rampa modifican las detecciones del monitor.
+  \item Comparar una búsqueda que reacciona al monitor con otra que no lo hace.
+  \item Aplicar el mismo monitor a un problema de energía y reconocer cómo se codifica una solución en él.
+\end{enumerate}
+
+\needspace{14\baselineskip}
+\section{Programa}
+
+El taller recorre los siguientes temas, cada uno con ejercicios en el notebook:
+
+\begin{enumerate}
+  \item Introducción a la optimización y a las metaheurísticas.
+  \item Análisis de la curva de convergencia como serie de tiempo mediante Dynamic Time Warping.
+  \item Diseño y ajuste de un monitor de estancamiento.
+  \item Control de parámetros en un algoritmo híbrido GWO-DE a partir de lo que detecta el monitor.
+  \item Aplicación en energías renovables: dimensionamiento de un sistema eólico y solar con producción de hidrógeno.
+  \item Cierre y preguntas.
+\end{enumerate}
+
+\section{Metodología}
+
+El taller es práctico y se desarrolla en un notebook de Google Colab que se ejecuta completo al comenzar. Los participantes programan una sola función, la que compara la curva con los patrones de avance y de estancamiento. Si su versión no pasa la prueba, el notebook carga la solución y la actividad continúa sin pausas. El resto del tiempo trabajan en parejas: modifican parámetros, observan los gráficos y responden preguntas guiadas. Las celdas con mucho código vienen ocultas, para que la atención esté en los resultados.
+
+\section{Material de apoyo}
+
+El material está disponible en el repositorio del taller: \enlacerepo. La tabla describe los archivos.
+
+\begin{tabularx}{\textwidth}{@{}l X@{}}
+\toprule
+\textbf{Archivo} & \textbf{Contenido} \\
+\midrule
+\texttt{Taller\_Ciis.ipynb} & Notebook de trabajo, sin resultados y con la función por completar. \\
+\texttt{Taller\_Ciis\_Resuelto.ipynb} & Notebook resuelto, con todas las celdas ejecutadas y sus figuras. \\
+\texttt{README.md} & Instrucciones para abrir el notebook en Colab y descripción de cada sección. \\
+\bottomrule
+\end{tabularx}
+
+\section{Requisitos técnicos}
+
+Cada participante necesita un computador con navegador, conexión a internet y una cuenta de Google para usar Colab. Basta la versión gratuita con CPU. No hay que instalar software: los datos y el modelo de energía van dentro del notebook, y la instancia del MKP se descarga al ejecutarlo.
+
+\section{Referencias}
+
+\begin{enumerate}[label={[\arabic*]}]
+  \item H. Sakoe y S. Chiba, ``Dynamic programming algorithm optimization for spoken word recognition'', \emph{IEEE Transactions on Acoustics, Speech, and Signal Processing}, vol.~26, n.º~1, pp.~43-49, 1978. \url{https://doi.org/10.1109/TASSP.1978.1163055}
+  \item S. Mirjalili, S. M. Mirjalili y A. Lewis, ``Grey Wolf Optimizer'', \emph{Advances in Engineering Software}, vol.~69, pp.~46-61, 2014. \url{https://doi.org/10.1016/j.advengsoft.2013.12.007}
+\end{enumerate}
+
+\section{Contacto}
+
+Lucas Erazo, estudiante de Ingeniería Civil Informática, Escuela de Ingeniería Informática, Pontificia Universidad Católica de Valparaíso, Valparaíso, Chile. Correo: \href{mailto:lucas.erazo@pucv.cl}{lucas.erazo@pucv.cl}
+
+\end{document}
